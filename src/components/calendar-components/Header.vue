@@ -9,8 +9,6 @@
 </template>
 
 <script>
-// import { eventBus } from '../../main.js';
-
 export default {
   props: ['month', 'currentYear', 'date', 'bgColor'],
   emits: ['changeMonth'],
