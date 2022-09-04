@@ -96,7 +96,6 @@ export default {
 
   computed: {
     currentPeriods: function () {
-      console.log('Computing!');
       const month = this.currentDate.getMonth();
       const year = this.currentDate.getFullYear();
       return { month: this.monthsInfo[month], year };
@@ -125,7 +124,6 @@ export default {
         this.currentDate.getDate()
       );
 
-      console.log(newDate);
       this.currentDate = newDate;
     },
   },
