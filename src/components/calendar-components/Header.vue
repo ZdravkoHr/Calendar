@@ -25,7 +25,7 @@ header {
   text-align: center;
   font-size: 27px;
   padding: 0 10px;
-
+  user-select: none;
   font-family: 'Peddana', serif;
 
   color: #caf0f8;
