@@ -26,7 +26,6 @@ export default {
   props: {
     selectedColorTheme: {
       type: String,
-      default: 'deepPurpBlue',
     },
   },
   data() {
@@ -105,15 +104,11 @@ export default {
   methods: {
     validateColorTheme() {
       const availableThemes = Object.keys(colorThemes);
+      this.colorTheme = colorThemes[this.selectedColorTheme];
+
       if (!availableThemes.includes(this.selectedColorTheme)) {
         this.colorTheme = colorThemes.default;
-
-        throw new Error(
-          'You have passed an invalid theme, so the default one is applied.'
-        );
       }
-
-      this.colorTheme = colorThemes[this.selectedColorTheme];
     },
 
     changeMonth(newMonth) {
