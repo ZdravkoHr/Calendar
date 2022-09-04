@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  props: ['month', 'currentYear', 'currentDate', 'todayDate', 'colorTheme'],
+  props: ['monthData', 'date', 'todayDate', 'colorTheme'],
   data() {
     return {
       days: Array.from({ length: 5 }, () => {
@@ -39,7 +39,7 @@ export default {
   },
 
   watch: {
-    month() {
+    monthData() {
       this.clearDates();
       this.updateDaysForPrint();
       this.createBody();
@@ -68,12 +68,18 @@ export default {
       return result === -1 ? 6 : result;
     },
     createBody() {
-      const currentDay = new Date(this.currentYear, +this.month.number - 1, 1);
+      const currentDay = new Date(
+        this.date.getFullYear(),
+        this.monthData.number,
+        1
+      );
       const daysAfterMonday = this.getDaysAfterMonday(currentDay);
+
+      console.log('after monday: ', daysAfterMonday);
 
       let date = 1;
 
-      while (currentDay.getMonth() === +this.month.number - 1) {
+      while (currentDay.getMonth() === this.monthData.number) {
         let row = Math.floor((date + daysAfterMonday - 1) / 7);
         let col = currentDay.getDay() - 1;
         if (row > 4 || col > 6) {
@@ -97,7 +103,7 @@ export default {
       });
     },
     updateDaysForPrint() {
-      if (+this.month.number === 2) {
+      if (this.monthData.number === 1) {
         this.daysForPrint =
           this.lastMonthDate > 28 || this.lastMonthDay > 0
             ? [...this.days]
@@ -129,8 +135,8 @@ export default {
     isToday(currentDate) {
       return (
         this.todayDate.getDate() === currentDate &&
-        this.month.number - 1 === this.todayDate.getMonth() &&
-        this.currentDate.getFullYear() === this.todayDate.getFullYear()
+        this.monthData.number === this.todayDate.getMonth() &&
+        this.date.getFullYear() === this.todayDate.getFullYear()
       );
     },
   },

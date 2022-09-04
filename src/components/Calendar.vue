@@ -1,16 +1,14 @@
 <template>
   <div class="wrapper">
     <z-calendar-header
-      :month="currentPeriods.month"
-      :currentYear="currentPeriods.year"
+      :monthData="monthData"
       :date="currentDate"
       :bgColor="colorTheme.header"
       @changeMonth="changeMonth"
     ></z-calendar-header>
     <z-calendar-body
-      :month="currentPeriods.month"
-      :currentYear="currentPeriods.year"
-      :currentDate="currentDate"
+      :monthData="monthData"
+      :date="currentDate"
       :todayDate="todayDate"
       :colorTheme="colorTheme.body"
     ></z-calendar-body>
@@ -21,6 +19,7 @@
 import Header from './calendar-components/Header.vue';
 import Body from './calendar-components/Body.vue';
 import colorThemes from '../color-themes.js';
+import { months, getMonthNumber } from '../helpers/months';
 
 export default {
   props: {
@@ -34,58 +33,7 @@ export default {
     return {
       currentDate,
       todayDate,
-
-      monthsInfo: [
-        {
-          name: 'January',
-          number: '01',
-        },
-        {
-          name: 'February',
-          number: '02',
-        },
-        {
-          name: 'March',
-          number: '03',
-        },
-        {
-          name: 'April',
-          number: '04',
-        },
-        {
-          name: 'May',
-
-          number: '05',
-        },
-        {
-          name: 'June',
-          number: '06',
-        },
-        {
-          name: 'July',
-          number: '07',
-        },
-        {
-          name: 'August',
-          number: '08',
-        },
-        {
-          name: 'September',
-          number: '09',
-        },
-        {
-          name: 'October',
-          number: '10',
-        },
-        {
-          name: 'November',
-          number: '11',
-        },
-        {
-          name: 'December',
-          number: '12',
-        },
-      ],
+      months,
     };
   },
 
@@ -94,10 +42,10 @@ export default {
   },
 
   computed: {
-    currentPeriods: function () {
+    monthData: function () {
       const month = this.currentDate.getMonth();
-      const year = this.currentDate.getFullYear();
-      return { month: this.monthsInfo[month], year };
+      const monthName = months[month];
+      return { name: monthName, number: getMonthNumber(monthName) };
     },
   },
 
@@ -114,7 +62,7 @@ export default {
     changeMonth(newMonth) {
       const monthStep = newMonth === 'prev' ? -1 : 1;
       const newDate = new Date(
-        this.currentPeriods.year,
+        this.currentDate.getFullYear(),
         this.currentDate.getMonth() + monthStep,
         this.currentDate.getDate()
       );

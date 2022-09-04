@@ -2,7 +2,7 @@
   <header>
     <div class="month-name">
       <i class="fas fa-chevron-left" @click="$emit('changeMonth', 'prev')"></i>
-      {{ month.name }} {{ currentYear }}
+      {{ monthData.name }} {{ date.getFullYear() }}
       <i class="fas fa-chevron-right" @click="$emit('changeMonth', 'next')"></i>
     </div>
   </header>
@@ -10,11 +10,12 @@
 
 <script>
 export default {
-  props: ['month', 'currentYear', 'date', 'bgColor'],
+  props: ['monthData', 'date', 'bgColor'],
   emits: ['changeMonth'],
 
   mounted() {
     this.$el.style.backgroundColor = this.bgColor;
+    console.log('currentDate: ', this.date);
   },
 };
 </script>
