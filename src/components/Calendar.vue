@@ -5,7 +5,7 @@
       :currentYear="currentPeriods.year"
       :date="currentDate"
       :bgColor="colorTheme.header"
-      :changeMonth="changeMonth"
+      @changeMonth="changeMonth"
     ></z-calendar-header>
     <z-calendar-body
       :month="currentPeriods.month"

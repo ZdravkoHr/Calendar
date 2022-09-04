@@ -1,9 +1,9 @@
 <template>
   <header>
     <div class="month-name">
-      <i class="fas fa-chevron-left" @click="changeMonth('prev')"></i>
+      <i class="fas fa-chevron-left" @click="$emit('changeMonth', 'prev')"></i>
       {{ month.name }} {{ currentYear }}
-      <i class="fas fa-chevron-right" @click="changeMonth('next')"></i>
+      <i class="fas fa-chevron-right" @click="$emit('changeMonth', 'next')"></i>
     </div>
   </header>
 </template>
@@ -12,7 +12,8 @@
 // import { eventBus } from '../../main.js';
 
 export default {
-  props: ['month', 'currentYear', 'date', 'bgColor', 'changeMonth'],
+  props: ['month', 'currentYear', 'date', 'bgColor'],
+  emits: ['changeMonth'],
 
   mounted() {
     this.$el.style.backgroundColor = this.bgColor;
