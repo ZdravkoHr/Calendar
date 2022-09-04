@@ -75,15 +75,18 @@ export default {
       );
       const daysAfterMonday = this.getDaysAfterMonday(currentDay);
 
-      console.log('after monday: ', daysAfterMonday);
-
       let date = 1;
 
       while (currentDay.getMonth() === this.monthData.number) {
         let row = Math.floor((date + daysAfterMonday - 1) / 7);
         let col = currentDay.getDay() - 1;
-        if (row > 4 || col > 6) {
+
+        console.log(currentDay.getDate(), row, col);
+        if (row > 4) {
           row = 0;
+        }
+
+        if (col > 6) {
           col = 0;
         }
 
