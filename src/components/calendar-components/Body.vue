@@ -1,24 +1,11 @@
 <template>
-  <div class="calendar-body">
-    <div class="separator">
-      <small> MON </small>
-      <small> TUE </small>
-      <small> WED </small>
-      <small> THU </small>
-      <small> FRI </small>
-      <small> SAT </small>
-      <small> SUN </small>
-    </div>
-
+  <div class="calendar-body" :style="styles">
     <div class="dates">
       <div class="row" v-for="i in daysForPrint" :key="i.id">
-        <div
-          class="col"
-          v-for="j in i.arr"
-          :key="j.id"
-          :style="getColStyle(j.date)"
-        >
+        <div :class="getColClass(j.date)" v-for="j in i.arr" :key="j.id">
+          <!-- <span :style="getColStyle(j.date)"> -->
           {{ j.date }}
+          <!-- </span> -->
         </div>
       </div>
     </div>
@@ -52,6 +39,16 @@ export default {
     this.createBody();
   },
 
+  computed: {
+    styles() {
+      return {
+        '--background': this.colorTheme.bg,
+        '--color': this.colorTheme.color,
+        '--active': this.colorTheme.active,
+      };
+    },
+  },
+
   methods: {
     getNumberOfWeek(date) {
       date = Number(date);
@@ -81,7 +78,6 @@ export default {
         let row = Math.floor((date + daysAfterMonday - 1) / 7);
         let col = currentDay.getDay() - 1;
 
-        console.log(currentDay.getDate(), row, col);
         if (row > 4) {
           row = 0;
         }
@@ -127,13 +123,8 @@ export default {
         };
       });
     },
-    getColStyle(currentDate) {
-      return {
-        background: this.isToday(currentDate)
-          ? this.colorTheme.marked
-          : this.colorTheme.background,
-        color: this.colorTheme.color,
-      };
+    getColClass(currentDate) {
+      return this.isToday(currentDate) ? 'col active' : 'col';
     },
     isToday(currentDate) {
       return (
@@ -148,18 +139,8 @@ export default {
 
 <style lang="scss" scoped>
 .calendar-body {
-  .separator {
-    display: flex;
-    margin: 5px 0;
-    & > * {
-      flex: 1;
-    }
-
-    small {
-      text-align: center;
-    }
-  }
-
+  background: var(--background);
+  color: var(--color);
   small {
     display: block;
   }
@@ -179,11 +160,23 @@ export default {
     padding: 8px;
     font-weight: bold;
     font-size: 20px;
-    border: 1px solid;
-    border-bottom: 0;
-    border-right: 0;
-
+    isolation: isolate;
+    position: relative;
     cursor: pointer;
+
+    &.active::before {
+      content: '';
+      background: var(--active);
+      width: 34px;
+      height: 32px;
+      display: block;
+      position: absolute;
+      border-radius: 50%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+    }
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header :style="styles">
     <div class="month-name">
       <i class="fas fa-chevron-left" @click="$emit('changeMonth', 'prev')"></i>
       {{ monthData.name }} {{ date.getFullYear() }}
@@ -10,12 +10,16 @@
 
 <script>
 export default {
-  props: ['monthData', 'date', 'bgColor'],
+  props: ['monthData', 'date', 'colorTheme'],
   emits: ['changeMonth'],
 
-  mounted() {
-    this.$el.style.backgroundColor = this.bgColor;
-    console.log('currentDate: ', this.date);
+  computed: {
+    styles() {
+      return {
+        '--background': this.colorTheme.bg,
+        '--color': this.colorTheme.color,
+      };
+    },
   },
 };
 </script>
@@ -27,6 +31,8 @@ header {
   padding: 0 10px;
   user-select: none;
   font-family: 'Peddana', serif;
+  background: var(--background);
+  color: var(--color);
 
   color: #caf0f8;
   i {

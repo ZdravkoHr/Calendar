@@ -1,20 +1,34 @@
 export default {
   default: {
-    header: '#0077b6',
+    month: {
+      bg: '#0077b6',
+      color: '#fff',
+    },
+
+    days: {
+      bg: '#0077b6',
+      color: '#fff',
+    },
     body: {
-      background: '#0077b6',
+      bg: '#0077b6',
       color: '#caf0f8',
-      marked: '#03045e',
-      border: '90e0ef',
+      active: '#03045e',
     },
   },
   deepPurpBlue: {
-    header: '#240090',
+    month: {
+      bg: '#240090',
+      color: '#fff',
+    },
+    days: {
+      bg: '#240090',
+      color: '#fff',
+    },
+
     body: {
-      background: '#282828',
+      bg: '#282828',
       color: '#caf0f8',
-      marked: '#0c0032',
-      border: '#3500D3',
+      active: '#0c0032',
     },
   },
 };

@@ -3,9 +3,10 @@
     <z-calendar-header
       :monthData="monthData"
       :date="currentDate"
-      :bgColor="colorTheme.header"
+      :colorTheme="colorTheme.month"
       @changeMonth="changeMonth"
     ></z-calendar-header>
+    <z-day-labels :colorTheme="colorTheme.days"></z-day-labels>
     <z-calendar-body
       :monthData="monthData"
       :date="currentDate"
@@ -17,7 +18,9 @@
 
 <script>
 import Header from './calendar-components/Header.vue';
+import DayLabels from './calendar-components/DayLabels.vue';
 import Body from './calendar-components/Body.vue';
+
 import colorThemes from '../color-themes.js';
 import { months, getMonthNumber } from '../helpers/months';
 
@@ -73,6 +76,7 @@ export default {
   components: {
     zCalendarHeader: Header,
     zCalendarBody: Body,
+    zDayLabels: DayLabels,
   },
 };
 </script>
