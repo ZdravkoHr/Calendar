@@ -8,11 +8,7 @@
           :key="j.id"
           @click="this.$parent.$emit('dateSelect', j.dateObj)"
         >
-          <!-- <span :style="getColStyle(j.date)"> -->
-
           {{ j.date }}
-
-          <!-- </span> -->
         </div>
       </div>
     </div>
@@ -58,20 +54,13 @@ export default {
   },
 
   methods: {
-    getNumberOfWeek(date) {
-      date = Number(date);
-      const today = new Date();
-      today.setDate(date);
-      const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
-      const pastDaysOfYear = (today - firstDayOfYear) / 86400000;
-      return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
-    },
     getDaysAfterMonday(currentDay) {
       const result = currentDay.getDay() - 1;
       /*  The 0th day is Sunday. If we substract one from it, we get -1.
       because Sunday is 6 days after Monday -1 to 6*/
       return result === -1 ? 6 : result;
     },
+
     createBody() {
       const currentDay = new Date(
         this.date.getFullYear(),
@@ -83,16 +72,8 @@ export default {
       let date = 1;
 
       while (currentDay.getMonth() === this.monthData.number) {
-        let row = Math.floor((date + daysAfterMonday - 1) / 7);
-        let col = currentDay.getDay() - 1;
-
-        if (row > 4) {
-          row = 0;
-        }
-
-        if (col > 6) {
-          col = 0;
-        }
+        let row = Math.floor((date + daysAfterMonday - 1) / 7) % 5;
+        let col = (currentDay.getDay() - 1) % 7;
 
         this.lastMonthDay = currentDay.getDay();
         col = col === -1 ? 6 : col;
@@ -107,19 +88,23 @@ export default {
       this.days.forEach((obj) => {
         obj.arr.forEach((arr) => {
           arr.date = '';
+          arr.dateObj = null;
         });
       });
     },
+
     updateDaysForPrint() {
-      if (this.monthData.number === 1) {
-        this.daysForPrint =
-          this.lastMonthDate > 28 || this.lastMonthDay > 0
-            ? [...this.days]
-            : [...this.days].slice(0, this.days.length - 1);
-      } else {
+      if (this.monthData.number !== 1) {
         this.daysForPrint = [...this.days];
+        return;
       }
+
+      this.daysForPrint =
+        this.lastMonthDate > 28 || this.lastMonthDay > 0
+          ? [...this.days]
+          : [...this.days].slice(0, this.days.length - 1);
     },
+
     addDaysId() {
       this.days = this.days.map((week, index) => {
         week = week.map((date, index) => {
@@ -132,12 +117,14 @@ export default {
         };
       });
     },
+
     getColClass(currentDate) {
       let className = 'col';
       className += this.isToday(currentDate) ? ' active' : '';
       className += currentDate === '' ? ' empty' : '';
       return className;
     },
+
     isToday(currentDate) {
       return (
         this.todayDate.getDate() === currentDate &&
