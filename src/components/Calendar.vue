@@ -29,6 +29,9 @@ export default {
     selectedColorTheme: {
       type: String,
     },
+    customTheme: {
+      default: {},
+    },
   },
   data() {
     const currentDate = new Date();
@@ -41,7 +44,7 @@ export default {
   },
 
   created() {
-    this.validateColorTheme();
+    this.setColorTheme();
   },
 
   computed: {
@@ -53,13 +56,24 @@ export default {
   },
 
   methods: {
-    validateColorTheme() {
+    setColorTheme() {
       const availableThemes = Object.keys(colorThemes);
       this.colorTheme = colorThemes[this.selectedColorTheme];
 
       if (!availableThemes.includes(this.selectedColorTheme)) {
         this.colorTheme = colorThemes.default;
       }
+
+      this.addCustomTheme();
+    },
+
+    addCustomTheme() {
+      Object.entries(this.customTheme).forEach(([key, value]) => {
+        this.colorTheme[key] = {
+          ...this.colorTheme[key],
+          ...value,
+        };
+      });
     },
 
     changeMonth(newMonth) {

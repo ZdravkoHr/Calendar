@@ -44,7 +44,8 @@ export default {
       return {
         '--background': this.colorTheme.bg,
         '--color': this.colorTheme.color,
-        '--active': this.colorTheme.active,
+        '--active-background': this.colorTheme.activeBg,
+        '--active-color': this.colorTheme.activeColor,
       };
     },
   },
@@ -164,9 +165,13 @@ export default {
     position: relative;
     cursor: pointer;
 
+    &.active {
+      color: var(--active-color);
+    }
+
     &.active::before {
       content: '';
-      background: var(--active);
+      background: var(--active-background);
       width: 34px;
       height: 32px;
       display: block;

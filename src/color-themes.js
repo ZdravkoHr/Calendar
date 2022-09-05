@@ -12,7 +12,8 @@ export default {
     body: {
       bg: '#0077b6',
       color: '#caf0f8',
-      active: '#03045e',
+      activeBg: '#03045e',
+      activeColor: '#fff',
     },
   },
   deepPurpBlue: {
@@ -28,7 +29,8 @@ export default {
     body: {
       bg: '#282828',
       color: '#caf0f8',
-      active: '#0c0032',
+      activeBg: '#0c0032',
+      activeColor: '#fff',
     },
   },
 };
