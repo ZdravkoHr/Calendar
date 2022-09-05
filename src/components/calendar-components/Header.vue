@@ -40,4 +40,10 @@ header {
     font-size: 15px;
   }
 }
+
+.month-name {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 </style>
