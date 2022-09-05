@@ -2,9 +2,16 @@
   <div class="calendar-body" :style="styles">
     <div class="dates">
       <div class="row" v-for="i in daysForPrint" :key="i.id">
-        <div :class="getColClass(j.date)" v-for="j in i.arr" :key="j.id">
+        <div
+          :class="getColClass(j.date)"
+          v-for="j in i.arr"
+          :key="j.id"
+          @click="this.$parent.$emit('dateSelect', j.dateObj)"
+        >
           <!-- <span :style="getColStyle(j.date)"> -->
+
           {{ j.date }}
+
           <!-- </span> -->
         </div>
       </div>
@@ -90,6 +97,7 @@ export default {
         this.lastMonthDay = currentDay.getDay();
         col = col === -1 ? 6 : col;
         this.days[row].arr[col].date = date;
+        this.days[row].arr[col].dateObj = currentDay;
 
         currentDay.setDate(++date);
       }
@@ -125,7 +133,10 @@ export default {
       });
     },
     getColClass(currentDate) {
-      return this.isToday(currentDate) ? 'col active' : 'col';
+      let className = 'col';
+      className += this.isToday(currentDate) ? ' active' : '';
+      className += currentDate === '' ? ' empty' : '';
+      return className;
     },
     isToday(currentDate) {
       return (
@@ -169,7 +180,8 @@ export default {
       color: var(--active-color);
     }
 
-    &.active::before {
+    &.active::before,
+    &:not(.empty):hover::before {
       content: '';
       background: var(--active-background);
       width: 34px;
@@ -181,6 +193,10 @@ export default {
       top: 50%;
       transform: translate(-50%, -50%);
       z-index: -1;
+    }
+
+    &:not(.empty):hover::before {
+      opacity: 0.6;
     }
   }
 }
