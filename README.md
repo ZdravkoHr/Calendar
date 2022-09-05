@@ -5,7 +5,7 @@ This project is built with Vue and is a calendar. When first opened, it shows th
 
 # How is it meant to be used?
 
-The main idea behind this calendar is to be reused between different projects. It offers flexibility, such as choosing the color theme from the built-in themes or providing a custom theme. Overwriting style is easy, too. 
+The main idea behind this calendar is to be reused between different projects. It offers flexibility, such as choosing the color theme from the built-in themes or providing a custom theme. Overwriting a style is easy, too. The main file to be imported is **Calendar.vue**
 
 # Props that the main component accepts
 
